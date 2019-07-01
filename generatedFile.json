@@ -1,0 +1,220 @@
+{
+  "valid": true,
+  "name": "enqueuer",
+  "id": "2043430432_d2d6c89865_942021",
+  "level": 0,
+  "subscriptions": [],
+  "publishers": [],
+  "iterations": 1,
+  "totalIterations": 1,
+  "hooks": {
+    "onInit": {
+      "valid": true,
+      "tests": [],
+      "arguments": {
+        "elapsedTime": 0
+      }
+    },
+    "onFinish": {
+      "valid": true,
+      "tests": [],
+      "arguments": {
+        "elapsedTime": 13
+      }
+    },
+    "onParsed": {
+      "valid": true,
+      "tests": []
+    }
+  },
+  "time": {
+    "startTime": "2019-07-01T23:43:43.436Z",
+    "endTime": "2019-07-01T23:43:43.450Z",
+    "totalTime": 14
+  },
+  "requisitions": [
+    {
+      "valid": true,
+      "name": "examples/test.yml",
+      "id": "2043430432_6ded154194_57798",
+      "level": 1,
+      "subscriptions": [
+        {
+          "id": "2043430433_bfa730a67c_85854",
+          "name": "Subscription #0",
+          "type": "my-plugin",
+          "hooks": {
+            "onInit": {
+              "valid": true,
+              "tests": [],
+              "arguments": {
+                "elapsedTime": 0
+              }
+            },
+            "onFinish": {
+              "valid": true,
+              "tests": [
+                {
+                  "valid": true,
+                  "name": "Message received",
+                  "description": "Subscription has received its message"
+                }
+              ],
+              "arguments": {
+                "elapsedTime": 8
+              }
+            },
+            "onSubscribed": {
+              "valid": true,
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "Expected 'subscribed' to be equal to 'yay'. Received 'yay'"
+                }
+              ],
+              "arguments": {
+                "subscribed": "yay",
+                "elapsedTime": 2
+              }
+            },
+            "onMessageReceived": {
+              "valid": true,
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "Expected 'value' to be equal to 'string'. Received 'string'"
+                },
+                {
+                  "name": "Assertion #1",
+                  "valid": true,
+                  "description": "Expected 'numeral' to be equal to '123'. Received '123'"
+                }
+              ],
+              "arguments": {
+                "value": "string",
+                "numeral": 123,
+                "elapsedTime": 3
+              }
+            },
+            "onResponseSent": {
+              "valid": true,
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "Expected 'response' to be equal to 'sync'. Received 'sync'"
+                }
+              ],
+              "arguments": {
+                "response": "sync",
+                "elapsedTime": 6
+              }
+            },
+            "onUnsubscribed": {
+              "valid": true,
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "Expected 'unsubscribed' to be equal to 'noo'. Received 'noo'"
+                }
+              ],
+              "arguments": {
+                "unsubscribed": "noo",
+                "elapsedTime": 8
+              }
+            }
+          },
+          "valid": true,
+          "subscriptionTime": "2019-07-01T23:43:43.442Z"
+        }
+      ],
+      "publishers": [
+        {
+          "id": "2043430432_78244f2ddb_589319",
+          "name": "Publisher #0",
+          "valid": true,
+          "hooks": {
+            "onInit": {
+              "arguments": {
+                "elapsedTime": 0
+              },
+              "tests": [],
+              "valid": true
+            },
+            "onFinish": {
+              "arguments": {
+                "elapsedTime": 8
+              },
+              "tests": [
+                {
+                  "name": "Published",
+                  "valid": true,
+                  "description": "Published successfully"
+                }
+              ],
+              "valid": true
+            },
+            "onFirstHook": {
+              "arguments": {
+                "revertedFirst": "eulav",
+                "elapsedTime": 4
+              },
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "Expected 'revertedFirst' to be equal to 'eulav'. Received 'eulav'"
+                }
+              ],
+              "valid": true
+            },
+            "onSecondHook": {
+              "arguments": {
+                "second": "v.a.l.u.e",
+                "elapsedTime": 5
+              },
+              "tests": [
+                {
+                  "name": "Assertion #0",
+                  "valid": true,
+                  "description": "Expected 'second' to be equal to 'v.a.l.u.e'. Received 'v.a.l.u.e'"
+                }
+              ],
+              "valid": true
+            }
+          },
+          "type": "my-plugin",
+          "publishTime": "2019-07-01T23:43:43.446Z"
+        }
+      ],
+      "iterations": 1,
+      "totalIterations": 1,
+      "hooks": {
+        "onInit": {
+          "valid": true,
+          "tests": [],
+          "arguments": {
+            "elapsedTime": 0
+          }
+        },
+        "onFinish": {
+          "valid": true,
+          "tests": [],
+          "arguments": {
+            "elapsedTime": 9
+          }
+        }
+      },
+      "time": {
+        "startTime": "2019-07-01T23:43:43.438Z",
+        "endTime": "2019-07-01T23:43:43.448Z",
+        "totalTime": 10,
+        "timeout": 5000
+      },
+      "requisitions": []
+    }
+  ]
+}
