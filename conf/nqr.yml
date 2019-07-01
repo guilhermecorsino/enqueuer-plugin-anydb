@@ -1,8 +1,0 @@
-files:
-- examples/*.yml
-
-outputs:
-- type: file
-  filename: generatedFile.json
-  format: my-plugin
-
