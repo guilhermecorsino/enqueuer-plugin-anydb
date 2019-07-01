@@ -1,0 +1,56 @@
+{
+  "name": "enqueuer-plugin-anydb",
+  "version": "0.0.1",
+  "description": "Enqueuer Plugin Anydb",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "all": "rm generatedFile.json || npm run clean && npm run lint && npm run build && npm run checkInstall && npm run test",
+    "checkInstall": "nqr -p my-plugin -c conf/nqr.yml -l `pwd` && nqr -f my-plugin -c conf/nqr.yml -l `pwd` && nqr -e nqr -c conf/nqr.yml -l `pwd` && nqr -t assertThat -c conf/nqr.yml -l `pwd`",
+    "build": "tsc",
+    "test": "nqr -l `pwd` -c conf/nqr.yml",
+    "clean": "rm -rf dist",
+    "lint": "node_modules/.bin/tslint --project tsconfig.json",
+    "prepublishOnly": "npm run all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guilhermecorsino/enqueuer-plugin-anydb.git"
+  },
+  "keywords": [
+    "enqueuer",
+    "nqr",
+    "plugin"
+  ],
+  "author": {
+    "name": "Guilherme Corsino",
+    "email": "guilhermecorsino@outlook.com",
+    "url": "https://github.com/guilhermecorsino"
+  },
+  "contributors": [
+    {
+      "name": "Gabriel Bressani",
+      "email": "g.bressaniribeiro@gmail.com",
+      "url": "https://github.com/gabrielbressani"
+    },
+    {
+      "name": "Guilherme Moraes",
+      "email": "guilherme.moraes@outlook.com",
+      "url": "https://github.com/lopidio"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb/issues"
+  },
+  "homepage": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb#readme",
+  "devDependencies": {
+    "@types/node": "^12.0.10",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.2"
+  },
+  "dependencies": {
+    "enqueuer": "^5.0.1"
+  }
+}

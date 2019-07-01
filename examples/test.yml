@@ -1,0 +1,34 @@
+publishers:
+    -   type: my-plugin
+        first: value
+        second: value
+        onFirstHook:
+            assertions:
+                -   expect: revertedFirst
+                    toBeEqualTo: `eulav`
+        onSecondHook:
+            assertions:
+                -   expect: second
+                    toBeEqualTo: `v.a.l.u.e`
+subscriptions:
+    -   type: my-plugin
+        received: string
+        number: 123
+        onMessageReceived:
+            assertions:
+                -   expect: value
+                    toBeEqualTo: `string`
+                -   expect: numeral
+                    toBeEqualTo: 123
+        onSubscribed:
+            assertions:
+                -   expect: subscribed
+                    toBeEqualTo: `yay`
+        onUnsubscribed:
+            assertions:
+                -   expect: unsubscribed
+                    toBeEqualTo: `noo`
+        onResponseSent:
+            assertions:
+                -   expect: response
+                    toBeEqualTo: `sync`
