@@ -44,12 +44,15 @@
   },
   "homepage": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb#readme",
   "devDependencies": {
+    "@types/any-db": "^2.1.30",
     "@types/node": "^12.0.10",
+    "any-db": "^2.2.1",
     "ts-node": "^8.3.0",
     "tslint": "^5.18.0",
     "typescript": "^3.5.2"
   },
   "dependencies": {
+    "any-db-postgres": "^2.1.5",
     "enqueuer": "^5.0.1"
   }
 }
