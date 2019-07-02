@@ -15,6 +15,7 @@ notifications:
         on_failure: always
 
 before_install:
+- sudo chmod +x travis.sh
 - ./travis.sh
 
 script:
