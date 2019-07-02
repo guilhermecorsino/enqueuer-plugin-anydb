@@ -18,7 +18,7 @@ services:
     - postgresql
 
 before_script:
-  - ./travis.sh
+- ./travis.sh
 
 script:
     - npm install
