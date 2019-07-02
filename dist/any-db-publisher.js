@@ -28,12 +28,13 @@ class AnyDbPublisher extends enqueuer_1.Publisher {
                 let connection = anyDb.createConnection(this.url);
                 connection.query(this.query, [], (error, result) => {
                     if (error) {
-                        console.log(error);
+                        enqueuer_1.Logger.error(error.toString());
                         reject(error);
                         return;
                     }
-                    console.log(result);
-                    resolve(result);
+                    enqueuer_1.Logger.info(`Query completed`);
+                    this.executeHookEvent('onQueryCompleted', result);
+                    resolve();
                 });
             });
         });

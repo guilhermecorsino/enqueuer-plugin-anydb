@@ -1,9 +1,33 @@
-publishers:
-  - type: anyDb
-    options:
-        driver: postgres
-        user: payments_service
-        password: payments_service
-        hostname: localhost:2345
-        database: payments_service
-    query: SELECT * FROM quartz_locks
+requisitions:
+  - publishers:
+      - type: anyDb
+        options: <<options>>
+        query: CREATE TABLE table_sample (name VARCHAR(50), age INTEGER);
+        onQueryCompleted:
+          assertions:
+            - expect: rows.length
+              toBeEqualTo: 0
+  - publishers:
+      - type: anyDb
+        options: <<options>>
+        query: INSERT INTO table_sample VALUES ('corsino', 44);
+        onQueryCompleted:
+          assertions:
+            - expect: rowCount
+              toBeEqualTo: 1
+  - publishers:
+        - type: anyDb
+          options: <<options>>
+          query: SELECT * FROM table_sample;
+          onQueryCompleted:
+            assertions:
+              - expect: rows.length
+                toBeEqualTo: 1
+              - expect: rows[0]
+                toBeEqualTo: 
+                  name: 'corsino'
+                  age: 44
+  - publishers:
+      - type: anyDb
+        options: <<options>>
+        query: DROP TABLE table_sample; 
