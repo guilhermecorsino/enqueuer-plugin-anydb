@@ -14,11 +14,20 @@ notifications:
         on_success: never
         on_failure: always
 
+<<<<<<< HEAD
 services:
     - postgresql
 
 before_script:
+<<<<<<< HEAD
   - ./travis.sh
+=======
+  - travis.sh
+>>>>>>> af8f88d6a961fe39b9ce648633e635399683f7ae
+=======
+before_install:
+- ./travis.sh
+>>>>>>> 18d9856... Create enqueuer self tests
 
 script:
     - npm install
