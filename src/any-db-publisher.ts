@@ -1,4 +1,4 @@
-import { Publisher, InputPublisherModel as PublisherModel } from 'enqueuer';
+import { Publisher, InputPublisherModel as PublisherModel, Logger } from 'enqueuer';
 import * as anyDb from 'any-db';
 
 export class AnyDbPublisher extends Publisher {
@@ -10,19 +10,19 @@ export class AnyDbPublisher extends Publisher {
         this.url = `${this.options.driver}://${this.options.user}:${this.options.password}@${this.options.hostname}/${this.options.database}`
     }
 
-    public async publish(): Promise<any> {
+    public async publish(): Promise<void> {
         return new Promise((resolve, reject) => {
             let connection = anyDb.createConnection(this.url);
             connection.query(this.query, [], (error:Error, result: anyDb.ResultSet) => {
                 if(error) {
-                    console.log(error);
+                    Logger.error(error.toString());
                     reject(error);
                     return;
                 }
-                console.log(result);
-                resolve(result);
+                Logger.trace(`Query completed: ${result}`);
+                this.executeHookEvent('onQueryCompleted', result);
+                resolve();
             });
         });
     }
-
 }

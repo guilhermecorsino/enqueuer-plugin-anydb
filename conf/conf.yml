@@ -1,0 +1,10 @@
+files:
+  - examples/*.yaml
+
+store:
+  options:
+    driver: postgres
+    user: user_test
+    password: password_test
+    hostname: localhost:2345
+    database: dabatase_name_test
