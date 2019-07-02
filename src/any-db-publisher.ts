@@ -6,15 +6,15 @@ export class AnyDbPublisher extends Publisher {
 
     public constructor(publisherProperties: PublisherModel) {
         super(publisherProperties);
-    
-        this.url = `${this.options.driver}://${this.options.user}:${this.options.password}@${this.options.hostname}/${this.options.database}`
+
+        this.url = `${this.options.driver}://${this.options.user}:${this.options.password}@${this.options.hostname}/${this.options.database}`;
     }
 
     public async publish(): Promise<void> {
         return new Promise((resolve, reject) => {
             let connection = anyDb.createConnection(this.url);
-            connection.query(this.query, [], (error:Error, result: anyDb.ResultSet) => {
-                if(error) {
+            connection.query(this.query, [], (error: Error, result: anyDb.ResultSet) => {
+                if (error) {
                     Logger.error(error.toString());
                     reject(error);
                     return;
