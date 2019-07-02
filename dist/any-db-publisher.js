@@ -32,7 +32,7 @@ class AnyDbPublisher extends enqueuer_1.Publisher {
                         reject(error);
                         return;
                     }
-                    enqueuer_1.Logger.info(`Query completed`);
+                    enqueuer_1.Logger.trace(`Query completed: ${result}`);
                     this.executeHookEvent('onQueryCompleted', result);
                     resolve();
                 });

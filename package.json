@@ -5,8 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "all": "npm run clean && npm run lint && npm run build && npm run checkInstall && npm run test",
-    "checkInstall": "nqr -p my-plugin -c conf/nqr.yml -l `pwd` && nqr -f my-plugin -c conf/nqr.yml -l `pwd` && nqr -e nqr -c conf/nqr.yml -l `pwd` && nqr -t assertThat -c conf/nqr.yml -l `pwd`",
+    "all": "npm run clean && npm run lint && npm run build && npm run test",
     "build": "tsc",
     "test": "nqr -l `pwd` -c conf/conf.yml",
     "clean": "rm -rf dist",
