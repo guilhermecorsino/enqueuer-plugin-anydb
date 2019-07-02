@@ -26,6 +26,7 @@ before_script:
 >>>>>>> af8f88d6a961fe39b9ce648633e635399683f7ae
 =======
 before_install:
+- sudo chmod +x travis.sh
 - ./travis.sh
 >>>>>>> 18d9856... Create enqueuer self tests
 
