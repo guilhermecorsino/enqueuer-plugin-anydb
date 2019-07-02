@@ -1,0 +1,9 @@
+publishers:
+  - type: anyDb
+    options:
+        driver: postgres
+        user: payments_service
+        password: payments_service
+        hostname: localhost:2345
+        database: payments_service
+    query: SELECT * FROM quartz_locks
