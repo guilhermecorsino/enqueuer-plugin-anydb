@@ -12,7 +12,7 @@ export class AnyDbPublisher extends Publisher {
 
     public async publish(): Promise<any> {
         return new Promise((resolve, reject) => {
-            let connection = anyDb.createConnection(this.url);
+            const connection = anyDb.createConnection(this.url);
             connection.query(this.query, this.params || [], (error: Error, result: anyDb.ResultSet) => {
                 if (error) {
                     Logger.error(error.toString());

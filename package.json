@@ -7,6 +7,7 @@
   "scripts": {
     "all": "npm run clean && npm run lint && npm run build && npm run test",
     "build": "tsc",
+    "codeCoverage": "node_modules/.bin/jest --silent --coverage",
     "test": "nqr -l `pwd` -c conf/conf.yml",
     "clean": "rm -rf dist",
     "lint": "node_modules/.bin/tslint --project tsconfig.json",
@@ -45,8 +46,11 @@
   "homepage": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb#readme",
   "devDependencies": {
     "@types/any-db": "^2.1.30",
+    "@types/jest": "^25.1.4",
     "@types/node": "^12.12.30",
     "any-db": "^2.2.1",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.1",
     "ts-node": "^8.8.1",
     "tslint": "^5.20.1",
     "typescript": "^3.8.3"
@@ -54,5 +58,29 @@
   "dependencies": {
     "any-db-postgres": "^2.1.5",
     "enqueuer": "^5.1.4"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/any-db-publisher.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 95,
+        "branches": 95,
+        "functions": 95,
+        "lines": 95
+      }
+    },
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": ".*\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
   }
 }
