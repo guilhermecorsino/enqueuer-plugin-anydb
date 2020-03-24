@@ -10,7 +10,7 @@ requisitions:
   - publishers:
       - type: anyDb
         options: <<options>>
-        query: INSERT INTO table_sample VALUES (?, ?);
+        query: INSERT INTO table_sample VALUES ($1, $2);
         params:
           - 'corsino'
           - 42
