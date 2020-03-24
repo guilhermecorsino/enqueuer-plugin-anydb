@@ -10,9 +10,10 @@ export class AnyDbPublisher extends Publisher {
         this.url = `${this.options.driver}://${this.options.user}:${this.options.password}@${this.options.hostname}/${this.options.database}`;
     }
 
-    public async publish(): Promise<void> {
+    public async publish(): Promise<any> {
         return new Promise((resolve, reject) => {
             let connection = anyDb.createConnection(this.url);
+            console.log(this.params || []);
             connection.query(this.query, this.params || [], (error: Error, result: anyDb.ResultSet) => {
                 if (error) {
                     Logger.error(error.toString());
@@ -21,7 +22,7 @@ export class AnyDbPublisher extends Publisher {
                 }
                 Logger.trace(`Query completed: ${result}`);
                 this.executeHookEvent('onQueryCompleted', result);
-                resolve();
+                resolve(result);
             });
         });
     }
