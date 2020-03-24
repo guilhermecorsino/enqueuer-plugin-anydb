@@ -10,24 +10,27 @@ requisitions:
   - publishers:
       - type: anyDb
         options: <<options>>
-        query: INSERT INTO table_sample VALUES ('corsino', 44);
+        query: INSERT INTO table_sample VALUES (?, ?);
+        params:
+          - 'corsino'
+          - 42
         onQueryCompleted:
           assertions:
             - expect: rowCount
               toBeEqualTo: 1
   - publishers:
-        - type: anyDb
-          options: <<options>>
-          query: SELECT * FROM table_sample;
-          onQueryCompleted:
-            assertions:
-              - expect: rows.length
-                toBeEqualTo: 1
-              - expect: rows[0]
-                toBeEqualTo: 
-                  name: 'corsino'
-                  age: 44
+      - type: anyDb
+        options: <<options>>
+        query: SELECT * FROM table_sample;
+        onQueryCompleted:
+          assertions:
+            - expect: rows.length
+              toBeEqualTo: 1
+            - expect: rows[0]
+              toBeEqualTo:
+                name: 'corsino'
+                age: 44
   - publishers:
       - type: anyDb
         options: <<options>>
-        query: DROP TABLE table_sample; 
+        query: DROP TABLE table_sample;
