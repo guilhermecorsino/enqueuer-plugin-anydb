@@ -12,17 +12,24 @@ export class AnyDbPublisher extends Publisher {
 
     public async publish(): Promise<any> {
         return new Promise((resolve, reject) => {
-            const connection = anyDb.createConnection(this.url);
-            connection.query(this.query, this.params || [], (error: Error, result: anyDb.ResultSet) => {
+            anyDb.createConnection(this.url, ((error, connection) => {
                 if (error) {
                     Logger.error(error.toString());
                     reject(error);
                     return;
+
                 }
-                Logger.trace(`Query completed: ${result}`);
-                this.executeHookEvent('onQueryCompleted', result);
-                resolve(result);
-            });
+                connection.query(this.query, this.params || [], (error: Error, result: anyDb.ResultSet) => {
+                    if (error) {
+                        Logger.error(error.toString());
+                        reject(error);
+                        return;
+                    }
+                    Logger.trace(`Query completed: ${result}`);
+                    this.executeHookEvent('onQueryCompleted', result);
+                    resolve(result);
+                });
+            }));
         });
     }
 }

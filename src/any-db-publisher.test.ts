@@ -11,9 +11,9 @@ describe('AnyDbPublisher', () => {
     });
 
     it('should create connection with correct url', async () => {
-        const createConnectionMock = jest.fn(() => ({
+        const createConnectionMock = jest.fn((url, cb) => cb(null, ({
             query: (query: string, params: string[], callback: Function) => callback()
-        }));
+        })));
         // @ts-ignore
         anyDb.createConnection.mockImplementationOnce(createConnectionMock);
 
@@ -28,14 +28,34 @@ describe('AnyDbPublisher', () => {
         };
         await new AnyDbPublisher(publisherProperties).publish();
 
-        expect(createConnectionMock).toHaveBeenCalledWith('driver://user:password@hostname/database');
+        expect(createConnectionMock).toHaveBeenCalledWith('driver://user:password@hostname/database', expect.any(Function));
+    });
+
+    it('should reject when connection fails', async () => {
+        const createConnectionMock = jest.fn((url, cb) => cb('Connection error', ({
+            query: (query: string, params: string[], callback: Function) => callback()
+        })));
+        // @ts-ignore
+        anyDb.createConnection.mockImplementationOnce(createConnectionMock);
+
+        const publisherProperties: any = {
+            options: {
+                driver: 'driver',
+                user: 'user',
+                password: 'password',
+                hostname: 'hostname',
+                database: 'database',
+            }
+        };
+
+        await expect(new AnyDbPublisher(publisherProperties).publish()).rejects.toBe('Connection error');
     });
 
     it('should query correctly', async () => {
         // @ts-ignore
-        anyDb.createConnection.mockImplementationOnce(() => ({
+        anyDb.createConnection.mockImplementationOnce((url, cb) => cb(null, ({
             query: queryMock
-        }));
+        })));
 
         const publisherProperties: any = {
             options: {},
@@ -48,9 +68,9 @@ describe('AnyDbPublisher', () => {
 
     it('should default params to empty list', async () => {
         // @ts-ignore
-        anyDb.createConnection.mockImplementationOnce(() => ({
+        anyDb.createConnection.mockImplementationOnce((url, cb) => cb(null, ({
             query: queryMock
-        }));
+        })));
 
         const publisherProperties: any = {
             options: {},
@@ -63,9 +83,9 @@ describe('AnyDbPublisher', () => {
 
     it('should send params to query method', async () => {
         // @ts-ignore
-        anyDb.createConnection.mockImplementationOnce(() => ({
+        anyDb.createConnection.mockImplementationOnce((url, cb) => cb(null, ({
             query: queryMock
-        }));
+        })));
 
         const publisherProperties: any = {
             options: {},
@@ -80,9 +100,9 @@ describe('AnyDbPublisher', () => {
     it('should reject when error', async () => {
         queryMock = jest.fn((query: string, params: string[], callback: Function) => callback('Error'));
         // @ts-ignore
-        anyDb.createConnection.mockImplementationOnce(() => ({
+        anyDb.createConnection.mockImplementationOnce((url, cb) => cb(null, ({
             query: queryMock
-        }));
+        })));
 
         const publisherProperties: any = {
             options: {},
@@ -96,9 +116,9 @@ describe('AnyDbPublisher', () => {
     it('should resolve with query return', async () => {
         queryMock = jest.fn((query: string, params: string[], callback: Function) => callback(null, 'good return'));
         // @ts-ignore
-        anyDb.createConnection.mockImplementationOnce(() => ({
+        anyDb.createConnection.mockImplementationOnce((url, cb) => cb(null, ({
             query: queryMock
-        }));
+        })));
 
         const publisherProperties: any = {
             options: {},
