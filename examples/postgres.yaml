@@ -1,6 +1,6 @@
 requisitions:
   - publishers:
-      - type: anyDb
+      - type: anydb
         options: <<options>>
         query: CREATE TABLE table_sample (name VARCHAR(50), age INTEGER);
         onQueryCompleted:
@@ -8,7 +8,7 @@ requisitions:
             - expect: rows.length
               toBeEqualTo: 0
   - publishers:
-      - type: anyDb
+      - type: anydb
         options: <<options>>
         query: INSERT INTO table_sample VALUES ($1, $2);
         params:
@@ -19,7 +19,7 @@ requisitions:
             - expect: rowCount
               toBeEqualTo: 1
   - publishers:
-      - type: anyDb
+      - type: anydb
         options: <<options>>
         query: SELECT * FROM table_sample;
         onQueryCompleted:
@@ -31,6 +31,6 @@ requisitions:
                 name: 'corsino'
                 age: 44
   - publishers:
-      - type: anyDb
+      - type: anydb
         options: <<options>>
         query: DROP TABLE table_sample;
