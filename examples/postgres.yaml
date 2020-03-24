@@ -13,7 +13,7 @@ requisitions:
         query: INSERT INTO table_sample VALUES ($1, $2);
         params:
           - 'corsino'
-          - 42
+          - 44
         onQueryCompleted:
           assertions:
             - expect: rowCount
