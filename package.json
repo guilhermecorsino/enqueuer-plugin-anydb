@@ -20,7 +20,14 @@
   "keywords": [
     "enqueuer",
     "nqr",
-    "plugin"
+    "plugin",
+    "postgres",
+    "mysql",
+    "postgres",
+    "pg",
+    "sqlite",
+    "sqlite3",
+    "dynamodb"
   ],
   "author": {
     "name": "Guilherme Corsino",
