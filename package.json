@@ -45,14 +45,14 @@
   },
   "homepage": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb#readme",
   "devDependencies": {
-    "@types/any-db": "^2.1.30",
-    "@types/jest": "^25.1.4",
-    "@types/node": "^12.12.30",
-    "jest": "^25.1.0",
-    "ts-jest": "^25.2.1",
-    "ts-node": "^8.8.1",
+    "@types/any-db": "^2.1.31",
+    "@types/jest": "^25.2.3",
+    "@types/node": "^12.12.69",
+    "jest": "^25.5.4",
+    "ts-jest": "^25.5.1",
+    "ts-node": "^8.10.2",
     "tslint": "^5.20.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.7"
   },
   "dependencies": {
     "any-db": "^2.2.1",
@@ -60,7 +60,7 @@
     "any-db-mysql": "^2.1.2",
     "any-db-postgres": "^2.1.5",
     "any-db-sqlite3": "^2.1.4",
-    "enqueuer": "^5.1.4"
+    "enqueuer": "^5.2.0"
   },
   "jest": {
     "collectCoverageFrom": [
