@@ -26,7 +26,7 @@ describe('DefaultPublisher', () => {
                 database: 'database',
             }
         };
-        await new DefaultPublisher(publisherProperties).publish();
+        await new DefaultPublisher(publisherProperties, () => true).publish();
 
         expect(createConnectionMock).toHaveBeenCalledWith('driver://user:password@hostname/database', expect.any(Function));
     });
@@ -48,7 +48,7 @@ describe('DefaultPublisher', () => {
             }
         };
 
-        await expect(new DefaultPublisher(publisherProperties).publish()).rejects.toBe('Connection error');
+        await expect(new DefaultPublisher(publisherProperties, () => true).publish()).rejects.toBe('Connection error');
     });
 
     it('should query correctly', async () => {
@@ -61,7 +61,7 @@ describe('DefaultPublisher', () => {
             options: {},
             query: 'select some stuff'
         };
-        await new DefaultPublisher(publisherProperties).publish();
+        await new DefaultPublisher(publisherProperties, () => true).publish();
 
         expect(queryMock.mock.calls[0][0]).toBe(publisherProperties.query);
     });
@@ -76,7 +76,7 @@ describe('DefaultPublisher', () => {
             options: {},
             query: 'select some stuff'
         };
-        await new DefaultPublisher(publisherProperties).publish();
+        await new DefaultPublisher(publisherProperties, () => true).publish();
 
         expect(queryMock.mock.calls[0][1]).toEqual([]);
     });
@@ -92,7 +92,7 @@ describe('DefaultPublisher', () => {
             query: 'select some stuff',
             params: [1, 'string', true]
         };
-        await new DefaultPublisher(publisherProperties).publish();
+        await new DefaultPublisher(publisherProperties, () => true).publish();
 
         expect(queryMock.mock.calls[0][1]).toEqual([1, 'string', true]);
     });
@@ -110,7 +110,7 @@ describe('DefaultPublisher', () => {
             params: [1, 'string', true]
         };
 
-        await expect(new DefaultPublisher(publisherProperties).publish()).rejects.toBe('Error');
+        await expect(new DefaultPublisher(publisherProperties, () => true).publish()).rejects.toBe('Error');
     });
 
     it('should resolve with query return', async () => {
@@ -126,6 +126,6 @@ describe('DefaultPublisher', () => {
             params: [1, 'string', true]
         };
 
-        await expect(new DefaultPublisher(publisherProperties).publish()).resolves.toBe('good return');
+        await expect(new DefaultPublisher(publisherProperties, () => true).publish()).resolves.toBe('good return');
     });
 });
