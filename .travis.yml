@@ -1,6 +1,8 @@
 language: node_js
 
-sudo: required
+dist: xenial
+
+os: linux
 
 node_js:
   - v10.8.0
@@ -19,6 +21,11 @@ services:
 
 before_install:
   - docker run -p 8000:8000 amazon/dynamodb-local &
+  - echo "[default]" >> $HOME/.aws/credentials
+  - echo "aws_access_key_id = accessKey" >> $HOME/.aws/credentials
+  - echo "aws_secret_access_key = aws_secret_access_key" >> $HOME/.aws/credentials
+  - export AWS_SDK_LOAD_CONFIG=1
+  - export AWS_SHARED_CREDENTIALS_FILE=$HOME/.aws/credentials
   - sleep 60
   - sudo chmod +x travis.sh
   - ./travis.sh

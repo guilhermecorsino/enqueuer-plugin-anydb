@@ -1,5 +1,5 @@
 files:
-  - examples/dyna*
+  - examples/*
 
 store:
   options:
@@ -12,7 +12,6 @@ store:
     driver: DynamoDB
     region: sa-east-1
     endpoint: http://localhost:8000
-    aws_access_key_id: aws_access_key_id
-    aws_secret_access_key: aws_secret_access_key
-    aws_session_token: aws_session_token
-
+    apiVersion: 2010-12-01
+    accessKeyId: accessKeyId
+    secretAccessKey: secretAccessKey
