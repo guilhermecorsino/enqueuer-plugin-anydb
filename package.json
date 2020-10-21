@@ -67,6 +67,7 @@
     "any-db-mysql": "^2.1.2",
     "any-db-postgres": "^2.1.5",
     "any-db-sqlite3": "^2.1.4",
+    "aws-sdk": "^2.775.0",
     "enqueuer": "^5.2.0"
   },
   "jest": {

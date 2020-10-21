@@ -1,9 +1,9 @@
 import * as anyDb from 'any-db';
-import {AnyDbPublisher} from './any-db-publisher';
+import {DefaultPublisher} from './default-publisher';
 
 jest.mock('any-db');
 
-describe('AnyDbPublisher', () => {
+describe('DefaultPublisher', () => {
     let queryMock: any;
 
     beforeEach(() => {
@@ -26,7 +26,7 @@ describe('AnyDbPublisher', () => {
                 database: 'database',
             }
         };
-        await new AnyDbPublisher(publisherProperties).publish();
+        await new DefaultPublisher(publisherProperties).publish();
 
         expect(createConnectionMock).toHaveBeenCalledWith('driver://user:password@hostname/database', expect.any(Function));
     });
@@ -48,7 +48,7 @@ describe('AnyDbPublisher', () => {
             }
         };
 
-        await expect(new AnyDbPublisher(publisherProperties).publish()).rejects.toBe('Connection error');
+        await expect(new DefaultPublisher(publisherProperties).publish()).rejects.toBe('Connection error');
     });
 
     it('should query correctly', async () => {
@@ -61,7 +61,7 @@ describe('AnyDbPublisher', () => {
             options: {},
             query: 'select some stuff'
         };
-        await new AnyDbPublisher(publisherProperties).publish();
+        await new DefaultPublisher(publisherProperties).publish();
 
         expect(queryMock.mock.calls[0][0]).toBe(publisherProperties.query);
     });
@@ -76,7 +76,7 @@ describe('AnyDbPublisher', () => {
             options: {},
             query: 'select some stuff'
         };
-        await new AnyDbPublisher(publisherProperties).publish();
+        await new DefaultPublisher(publisherProperties).publish();
 
         expect(queryMock.mock.calls[0][1]).toEqual([]);
     });
@@ -92,7 +92,7 @@ describe('AnyDbPublisher', () => {
             query: 'select some stuff',
             params: [1, 'string', true]
         };
-        await new AnyDbPublisher(publisherProperties).publish();
+        await new DefaultPublisher(publisherProperties).publish();
 
         expect(queryMock.mock.calls[0][1]).toEqual([1, 'string', true]);
     });
@@ -110,7 +110,7 @@ describe('AnyDbPublisher', () => {
             params: [1, 'string', true]
         };
 
-        await expect(new AnyDbPublisher(publisherProperties).publish()).rejects.toBe('Error');
+        await expect(new DefaultPublisher(publisherProperties).publish()).rejects.toBe('Error');
     });
 
     it('should resolve with query return', async () => {
@@ -126,6 +126,6 @@ describe('AnyDbPublisher', () => {
             params: [1, 'string', true]
         };
 
-        await expect(new AnyDbPublisher(publisherProperties).publish()).resolves.toBe('good return');
+        await expect(new DefaultPublisher(publisherProperties).publish()).resolves.toBe('good return');
     });
 });

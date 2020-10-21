@@ -1,11 +1,12 @@
-import {Publisher, InputPublisherModel as PublisherModel, Logger} from 'enqueuer';
+import {InputPublisherModel as PublisherModel, Logger, Publisher} from 'enqueuer';
 import * as anyDb from 'any-db';
 
-export class AnyDbPublisher extends Publisher {
-    private readonly url: string;
+export class DefaultPublisher extends Publisher {
 
-    public constructor(publisherProperties: PublisherModel) {
+    public constructor(publisherProperties: PublisherModel, hook: any) {
         super(publisherProperties);
+
+        this.hook = hook;
 
         this.url = `${this.options.driver}://${this.options.user}:${this.options.password}@${this.options.hostname}/${this.options.database}`;
     }

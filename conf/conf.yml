@@ -1,5 +1,5 @@
 files:
-  - examples/*.yaml
+  - examples/dyna*
 
 store:
   options:
@@ -8,3 +8,7 @@ store:
     password: password_test
     hostname: localhost:2345
     database: dabatase_name_test
+  aws:
+    driver: DynamoDB
+    region: sa-east-1
+    endpoint: http://localhost:8000
