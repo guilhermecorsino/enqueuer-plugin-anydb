@@ -23,9 +23,13 @@ before_install:
   - docker run -p 8000:8000 amazon/dynamodb-local &
   - mkdir $HOME/.aws
   - touch $HOME/.aws/credentials
+  - touch $HOME/.aws/config
   - echo "[default]" >> $HOME/.aws/credentials
   - echo "aws_access_key_id = accessKey" >> $HOME/.aws/credentials
   - echo "aws_secret_access_key = aws_secret_access_key" >> $HOME/.aws/credentials
+  - echo "[default]" >> $HOME/.aws/config
+  - echo "json" >> $HOME/.aws/config
+  - echo "us-east-1" >> $HOME/.aws/config
   - export AWS_SDK_LOAD_CONFIG=1
   - export AWS_SHARED_CREDENTIALS_FILE=$HOME/.aws/credentials
   - sleep 60
