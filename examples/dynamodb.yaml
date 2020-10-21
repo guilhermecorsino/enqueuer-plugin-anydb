@@ -1,4 +1,4 @@
-#https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.html
+#https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.Js.01.html
 - publishers:
     - type: anydb
       options:
@@ -23,7 +23,7 @@
           WriteCapacityUnits: 10
       onCommandCompleted:
         script: |-
-          console.log('createTable: ' + argumentNames)
+          console.log('createTable: ' + TableDescription)
 - publishers:
     - type: anydb
       options: <<aws>>
@@ -38,7 +38,7 @@
             rating: 0
       onCommandCompleted:
         script: |-
-          console.log('scan: ' + argumentNames)
+          console.log('put: ' + argumentNames)
 - publishers:
     - type: anydb
       options: <<aws>>
@@ -76,9 +76,9 @@
         ExpressionAttributeNames:
           '#yr': 'year'
         ExpressionAttributeValues:
-          :yyyy: 1992
-          :letter1: A
-          :letter2: L
+          :yyyy: 2015
+          :letter1: P
+          :letter2: Z
       onCommandCompleted:
         script: |-
           console.log('query: ' + JSON.stringify(Items))
@@ -112,7 +112,7 @@
           :val: 5.0
       onCommandCompleted:
         script: |-
-          console.log('scan: ' + argumentNames)
+          console.log('delete: ' + argumentNames)
 - publishers:
     - type: anydb
       options: <<aws>>
