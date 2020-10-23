@@ -1,6 +1,6 @@
 {
   "name": "enqueuer-plugin-anydb",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Enqueuer Plugin Anydb",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
