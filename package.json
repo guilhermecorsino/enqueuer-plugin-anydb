@@ -10,8 +10,7 @@
     "codeCoverage": "node_modules/.bin/jest --silent --coverage",
     "test": "nqr -l `pwd` -c conf/conf.yml",
     "clean": "rm -rf dist",
-    "lint": "node_modules/.bin/tslint --project tsconfig.json",
-    "prepublishOnly": "npm run all"
+    "lint": "node_modules/.bin/tslint --project tsconfig.json"
   },
   "repository": {
     "type": "git",
