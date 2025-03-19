@@ -1,10 +1,30 @@
-import {MainInstance, ProtocolDocumentation, PublisherProtocol} from 'enqueuer';
-import {AnyDbPublisher} from './anydb-publisher';
-import * as docs from './anydb-publisher-docs';
+import {
+  Actuator,
+  InputActuatorModel,
+  MainInstance,
+  ActuatorProtocol,
+} from "enqueuer";
+import { DynamoDbActuator } from "./dynamodb-actuator";
+import { PostgresActuator } from "./postgres-actuator";
+import { MongoDbActuator } from "./mongodb-actuator";
 
 export function entryPoint(mainInstance: MainInstance): void {
-    let anyDbPublisher = new PublisherProtocol('anydb',
-        (publisher) => new AnyDbPublisher(publisher),
-        docs.default as ProtocolDocumentation);
-    mainInstance.protocolManager.addProtocol(anyDbPublisher);
+  mainInstance.protocolManager.addProtocol(
+    new ActuatorProtocol(
+      "dynamodb",
+      (actuator: InputActuatorModel) => new DynamoDbActuator(actuator)
+    )
+  );
+  mainInstance.protocolManager.addProtocol(
+    new ActuatorProtocol(
+      "postgres",
+      (actuator: InputActuatorModel) => new PostgresActuator(actuator)
+    )
+  );
+  mainInstance.protocolManager.addProtocol(
+    new ActuatorProtocol(
+      "mongodb",
+      (actuator: InputActuatorModel) => new MongoDbActuator(actuator)
+    )
+  );
 }

@@ -1,26 +1,26 @@
-requisitions:
-  - publishers:
-      - type: anydb
-        options: <<options>>
+tasks:
+  - actuators:
+      - type: postgres
+        options: <<postgres-connection-configuration>>
         query: CREATE TABLE table_sample (name VARCHAR(50), age INTEGER);
         onQueryCompleted:
           assertions:
             - expect: rows.length
               toBeEqualTo: 0
-  - publishers:
-      - type: anydb
-        options: <<options>>
+  - actuators:
+      - type: postgres
+        options: <<postgres-connection-configuration>>
         query: INSERT INTO table_sample VALUES ($1, $2);
         params:
-          - 'corsino'
+          - "corsino"
           - 44
         onQueryCompleted:
           assertions:
             - expect: rowCount
               toBeEqualTo: 1
-  - publishers:
-      - type: anydb
-        options: <<options>>
+  - actuators:
+      - type: postgres
+        options: <<postgres-connection-configuration>>
         query: SELECT * FROM table_sample;
         onQueryCompleted:
           assertions:
@@ -28,9 +28,9 @@ requisitions:
               toBeEqualTo: 1
             - expect: rows[0]
               toBeEqualTo:
-                name: 'corsino'
+                name: "corsino"
                 age: 44
-  - publishers:
-      - type: anydb
-        options: <<options>>
+  - actuators:
+      - type: postgres
+        options: <<postgres-connection-configuration>>
         query: DROP TABLE table_sample;

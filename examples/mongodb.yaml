@@ -1,0 +1,69 @@
+# https://www.npmjs.com/package/mongodb
+tasks:
+  - actuators:
+      - type: mongodb
+        options: <<mongodb-connection-configuration>>
+        collection: collection_sample
+        methodName: insertMany
+        methodParams:
+          - name: corsino
+            age: 44
+          - name: virgs
+            age: 22
+        onQueryCompleted:
+          assertions:
+            - expect: insertedCount
+              toBeEqualTo: 2
+  - actuators:
+      - type: mongodb
+        options: <<mongodb-connection-configuration>>
+        collection: collection_sample
+        methodName: find
+        methodOptions: {}
+        methodParams: {}
+        onQueryCompleted:
+          assertions:
+            - expect: documents.length
+              toBeGreaterThanOrEqualTo: 2
+  - actuators:
+      - type: mongodb
+        options: <<mongodb-connection-configuration>>
+        collection: collection_sample
+        methodName: findOne
+        methodParams: { name: corsino }
+        methodOptions:
+          sort:
+            age: -1
+        onQueryCompleted:
+          assertions:
+            - expect: age
+              toBeGreaterThanOrEqualTo: 1
+  - actuators:
+      - type: mongodb
+        options: <<mongodb-connection-configuration>>
+        collection: collection_sample
+        methodName: updateOne
+        methodParams:
+          name: corsino
+        methodOptions:
+          $set:
+            bald: false
+        onQueryCompleted:
+          assertions:
+            - expect: modifiedCount
+              toBeGreaterThanOrEqualTo: 1
+  - actuators:
+      - type: mongodb
+        options: <<mongodb-connection-configuration>>
+        collection: collection_sample
+        methodName: deleteMany
+        methodParams:
+          name:
+            $regex: "virgs|corsino"
+        methodOptions:
+          $set:
+            bald: false
+        onQueryCompleted:
+          assertions:
+            - expect: deletedCount
+              toBeGreaterThanOrEqualTo: 1

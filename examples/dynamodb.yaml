@@ -1,124 +1,161 @@
-#https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.Js.01.html
-- publishers:
-    - type: anydb
-      options:
-        driver: DynamoDB
-        region: sa-east-1
-        endpoint: http://localhost:8000
-      command: createTable
-      params:
-        TableName: Movies
-        KeySchema:
-          - AttributeName: year #Partition key
-            KeyType: HASH
-          - AttributeName: title #Sort key
-            KeyType: RANGE
-        AttributeDefinitions:
-          - AttributeName: year
-            AttributeType: N
-          - AttributeName: title
-            AttributeType: S
-        ProvisionedThroughput:
-          ReadCapacityUnits: 10
-          WriteCapacityUnits: 10
-      onCommandCompleted:
-        script: |-
-          console.log('createTable: ' + TableDescription)
-- publishers:
-    - type: anydb
-      options: <<aws>>
-      command: put
-      params:
-        TableName: Movies
-        Item:
-          year: 2015
-          title: The Big New Movie
-          info:
-            plot: Nothing happens at all.
-            rating: 0
-      onCommandCompleted:
-        script: |-
-          console.log('put: ' + argumentNames)
-- publishers:
-    - type: anydb
-      options: <<aws>>
-      command: get
-      params:
-        TableName: Movies
-        Key:
-          year: 2015
-          title: The Big New Movie
-      onCommandCompleted:
-        script: |-
-          console.log('get: ' + JSON.stringify(Item))
-- publishers:
-    - type: anydb
-      options: <<aws>>
-      command: query
-      params:
-        TableName: Movies
-        KeyConditionExpression: '#yr = :yyyy'
-        ExpressionAttributeNames:
-          '#yr': year
-        ExpressionAttributeValues:
-          :yyyy: 2015
-      onCommandCompleted:
-        script: |-
-          console.log('query: ' + JSON.stringify(Items))
-- publishers:
-    - type: anydb
-      options: <<aws>>
-      command: query
-      params:
-        TableName: Movies
-        ProjectionExpression: '#yr, title, info.genres, info.actors[0]'
-        KeyConditionExpression: '#yr = :yyyy and title between :letter1 and :letter2'
-        ExpressionAttributeNames:
-          '#yr': 'year'
-        ExpressionAttributeValues:
-          :yyyy: 2015
-          :letter1: P
-          :letter2: Z
-      onCommandCompleted:
-        script: |-
-          console.log('query: ' + JSON.stringify(Items))
-- publishers:
-    - type: anydb
-      options: <<aws>>
-      command: scan
-      params:
-        TableName: Movies
-        ProjectionExpression: '#yr, title, info.genres'
-        FilterExpression: '#yr between :start_yr and :end_yr'
-        ExpressionAttributeNames:
-          '#yr': 'year'
-        ExpressionAttributeValues:
-          :start_yr: 1950,
-          :end_yr: 2059
-      onCommandCompleted:
-        script: |-
-          console.log('scan: ' + JSON.stringify(Items))
-- publishers:
-    - type: anydb
-      options: <<aws>>
-      command: delete
-      params:
-        TableName: Movies
-        Key:
-          year: 2015
-          title: The Big New Movie
-        ConditionExpression: info.rating <= :val
-        ExpressionAttributeValues:
-          :val: 5.0
-      onCommandCompleted:
-        script: |-
-          console.log('delete: ' + argumentNames)
-- publishers:
-    - type: anydb
-      options: <<aws>>
-      command: deleteTable
-      params:
-        TableName: Movies
-      onCommandCompleted:
-        script: |-
-          console.log('deleteTable: ' + argumentNames)
+# https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/dynamodb/
+tasks:
+  - actuators:
+      - type: dynamodb
+        configuration: <<aws-dynamo-connection-configuration>>
+        command: CreateTableCommand
+        params:
+          TableName: Movies
+          KeySchema:
+            - AttributeName: year #Partition key
+              KeyType: HASH
+            - AttributeName: title #Sort key
+              KeyType: RANGE
+          AttributeDefinitions:
+            - AttributeName: year
+              AttributeType: N
+            - AttributeName: title
+              AttributeType: S
+          ProvisionedThroughput:
+            ReadCapacityUnits: 10
+            WriteCapacityUnits: 10
+        onCommandCompleted:
+          assertions:
+            - expect: TableDescription.TableStatus
+              toBeEqualTo: "'ACTIVE'"
+  - actuators:
+      - type: dynamodb
+        configuration: <<aws-dynamo-connection-configuration>>
+        command: ListTablesCommand
+        params: {}
+        onCommandCompleted:
+          - expect: TableNames.length
+            toBeGreaterThanOrEqualTo: 1
+          - expect: TableNames
+            toContain: "'Movies'"
+  - actuators:
+      - type: dynamodb
+        configuration: <<aws-dynamo-connection-configuration>>
+        command: PutItemCommand
+        params:
+          TableName: Movies
+          Item:
+            year:
+              N: 2015
+            title:
+              S: The Big New Movie
+            info:
+              M:
+                plot:
+                  S: Nothing happens at all.
+                rating:
+                  N: 0
+        onCommandCompleted:
+          - expect: this.params.Item.year.N
+            toBeEqualTo: 2015
+  - actuators:
+      - type: dynamodb
+        configuration: <<aws-dynamo-connection-configuration>>
+        command: GetItemCommand
+        params:
+          TableName: Movies
+          Key:
+            year:
+              N: 2015
+            title:
+              S: The Big New Movie
+        onCommandCompleted:
+          - expect: Item.title.S
+            toBeEqualTo: "'The Big New Movie'"
+  - actuators:
+      - type: dynamodb
+        configuration: <<aws-dynamo-connection-configuration>>
+        command: QueryCommand
+        params:
+          TableName: Movies
+          KeyConditionExpression: "#yr = :yyyy"
+          ExpressionAttributeNames:
+            "#yr": year
+          ExpressionAttributeValues:
+            :yyyy:
+              N: 2015
+        onCommandCompleted:
+          - expect: Items.length
+            toBeGreaterThanOrEqualTo: 1
+  - actuators:
+      - type: dynamodb
+        configuration: <<aws-dynamo-connection-configuration>>
+        command: QueryCommand
+        params:
+          TableName: Movies
+          ProjectionExpression: "#yr, title, info.genres, info.actors[0]"
+          KeyConditionExpression: "#yr = :yyyy and title between :letter1 and :letter2"
+          ExpressionAttributeNames:
+            "#yr": "year"
+          ExpressionAttributeValues:
+            :yyyy:
+              N: 2015
+            :letter1:
+              S: P
+            :letter2:
+              S: Z
+        onCommandCompleted:
+          - expect: Items[0].title.S
+            toBeEqualTo: "'The Big New Movie'"
+  - actuators:
+      - type: dynamodb
+        configuration: <<aws-dynamo-connection-configuration>>
+        command: ScanCommand
+        params:
+          TableName: Movies
+          ProjectionExpression: "#yr, title, info.genres"
+          FilterExpression: "#yr between :start_yr and :end_yr"
+          ExpressionAttributeNames:
+            "#yr": "year"
+          ExpressionAttributeValues:
+            :start_yr:
+              N: 1950
+            :end_yr:
+              N: 2059
+        onCommandCompleted:
+          - expect: Items[0].year.N
+            toBeGreaterThanOrEqualTo: 2015
+  - actuators:
+      - type: dynamodb
+        configuration: <<aws-dynamo-connection-configuration>>
+        command: DeleteItemCommand
+        params:
+          TableName: Movies
+          Key:
+            year:
+              N: 2015
+            title:
+              S: The Big New Movie
+          ConditionExpression: info.rating <= :val
+          ExpressionAttributeValues:
+            :val:
+              N: 5.0
+  - actuators:
+      - type: dynamodb
+        configuration: <<aws-dynamo-connection-configuration>>
+        command: QueryCommand
+        params:
+          TableName: Movies
+          KeyConditionExpression: "#yr = :yyyy"
+          ExpressionAttributeNames:
+            "#yr": year
+          ExpressionAttributeValues:
+            :yyyy:
+              N: 2015
+        onCommandCompleted:
+          - expect: Items.length
+            toBeGreaterThanOrEqualTo: 0
+  - actuators:
+      - type: dynamodb
+        configuration: <<aws-dynamo-connection-configuration>>
+        command: DeleteTableCommand
+        params:
+          TableName: Movies
+        onCommandCompleted:
+          - expect: TableDescription.TableStatus
+            toBeEqualTo: "'DELETING'"

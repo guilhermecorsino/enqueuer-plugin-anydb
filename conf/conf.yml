@@ -2,12 +2,20 @@ files:
   - examples/*
 
 store:
-  options:
-    driver: postgres
-    user: user_test
-    password: password_test
-    hostname: localhost:2345
-    database: dabatase_name_test
-  aws:
-    driver: DynamoDB
-    region: sa-east-1
+  mongodb-connection-configuration:
+    host: localhost
+    port: 27017
+    database: mydb
+    username: root
+    password: example
+  postgres-connection-configuration:
+    user: postgres
+    password: postgres
+    host: localhost
+    port: 5432
+    database: datastoreservicedb
+  aws-dynamo-connection-configuration:
+    endpoint: http://localhost:4566
+    accessKeyId: na
+    secretAccessKey: na
+    region: us-east-1

@@ -10,7 +10,8 @@
     "codeCoverage": "node_modules/.bin/jest --silent --coverage",
     "test": "nqr -l `pwd` -c conf/conf.yml",
     "clean": "rm -rf dist",
-    "lint": "node_modules/.bin/tslint --project tsconfig.json"
+    "lint": "node_modules/.bin/tslint --project tsconfig.json",
+    "prepublishOnly": "npm run all"
   },
   "repository": {
     "type": "git",
@@ -20,12 +21,9 @@
     "enqueuer",
     "nqr",
     "plugin",
-    "postgres",
     "mysql",
     "postgres",
     "pg",
-    "sqlite",
-    "sqlite3",
     "dynamodb"
   ],
   "author": {
@@ -51,24 +49,17 @@
   },
   "homepage": "https://github.com/guilhermecorsino/enqueuer-plugin-anydb#readme",
   "devDependencies": {
-    "@types/any-db": "^2.1.31",
-    "@types/jest": "^25.2.3",
-    "@types/node": "^12.12.69",
-    "jest": "^29.3.1",
-    "ts-jest": "^25.5.1",
-    "ts-node": "^8.10.2",
+    "@types/node": "^22.13.10",
+    "@types/pg": "^8.11.11",
+    "ts-node": "^10.9.2",
     "tslint": "^5.20.1",
-    "typescript": "^3.9.7"
+    "typescript": "^5.8.2"
   },
   "dependencies": {
-    "any-db": "^2.2.1",
-    "any-db-mssql": "^0.1.0",
-    "any-db-mysql": "^2.1.2",
-    "any-db-postgres": "^2.1.5",
-    "any-db-sqlite3": "^2.1.4",
-    "aws-sdk": "^2.775.0",
-    "enqueuer": "^5.3.0",
-    "enqueuer-plugin-sqs": "^1.0.1"
+    "@aws-sdk/client-dynamodb": "^3.767.0",
+    "enqueuer": "^6.0.3",
+    "mongodb": "^6.15.0",
+    "pg": "^8.14.1"
   },
   "jest": {
     "collectCoverageFrom": [
