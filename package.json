@@ -7,7 +7,6 @@
   "scripts": {
     "all": "npm run clean && npm run lint && npm run build && npm run test",
     "build": "tsc",
-    "codeCoverage": "node_modules/.bin/jest --silent --coverage",
     "test": "nqr -l `pwd` -c conf/conf.yml",
     "clean": "rm -rf dist",
     "lint": "node_modules/.bin/tslint --project tsconfig.json",
@@ -21,10 +20,12 @@
     "enqueuer",
     "nqr",
     "plugin",
-    "mysql",
     "postgres",
     "pg",
-    "dynamodb"
+    "dynamodb",
+    "ddb",
+    "mongo",
+    "mongodb"
   ],
   "author": {
     "name": "Guilherme Corsino",
@@ -60,29 +61,5 @@
     "enqueuer": "^6.0.3",
     "mongodb": "^6.15.0",
     "pg": "^8.14.1"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/any-db-publisher.ts"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "statements": 95,
-        "branches": 95,
-        "functions": 95,
-        "lines": 95
-      }
-    },
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": ".*\\.test\\.ts$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json"
-    ]
   }
 }

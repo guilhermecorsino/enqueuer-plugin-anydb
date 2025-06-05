@@ -6,9 +6,9 @@ Enqueuer plugin to enable any database manipulation
 
 ## Currently supported actuators
 
-- mondogb
-- postgres
-- dynamodb
+1. mondogb
+2. postgres
+3. dynamodb
 
 ## Usage
 

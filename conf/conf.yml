@@ -13,7 +13,7 @@ store:
     password: postgres
     host: localhost
     port: 5432
-    database: datastoreservicedb
+    database: postgresdb
   aws-dynamo-connection-configuration:
     endpoint: http://localhost:4566
     accessKeyId: na
